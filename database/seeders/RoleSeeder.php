@@ -33,6 +33,17 @@ class RoleSeeder extends Seeder
         $permission_update_category = Permission::create(['name' => 'update categories']);
         $permission_delete_category = Permission::create(['name' => 'delete categories']);
 
-        $permissions_admin = [];
+        $permissions_admin = [$permission_create_role, $permission_read_role, $permission_update_role, $permission_delete_role,
+                             $permission_create_lesson, $permission_read_lesson, $permission_update_lesson, $permission_delete_lesson,
+                             $permission_create_category, $permission_read_category, $permission_update_category, $permission_delete_category];
+
+        $permissions_editor = [
+                            $permission_create_lesson, $permission_read_lesson, $permission_update_lesson, $permission_delete_lesson,
+                            $permission_create_category, $permission_read_category, $permission_update_category, $permission_delete_category];
+
+        $role_admin->syncPermissions($permissions_admin);
+        $role_editor->syncPermissions($permissions_editor);
+
+        //$role_editor->givePermissionTo($permission_create_role); DAR PERMISOS UNO POR UNO.
     }
 }
