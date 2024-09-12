@@ -7,6 +7,7 @@ export default {
 <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
     import { Link } from '@inertiajs/vue3';
+    import { Inertia } from '@inertiajs/inertia'
 
     defineProps({
         categories: {
@@ -21,6 +22,8 @@ export default {
             Inertia.delete(route('categories.destroy', id));
         }
     }
+
+    
 </script>
 
 <template>
@@ -33,10 +36,10 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex justify-between">
-                        <Link :href="route('categories.create')" class="bg-indigo-500 hover:bg-indigo-700 rounded py-2 px-4 text-white">
+                        <Link :href="route('categories.create')" class="bg-indigo-500 hover:bg-indigo-700 rounded py-2 px-4 text-white" v-if="$page.props.user.permissions.includes('create categories')">
                             Create category
                         </Link>
-                        
+                        {{ console.log(categories) }}
                     </div>
                 
 
@@ -50,11 +53,23 @@ export default {
                             </div>
                           </div>
                           <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <p class="text-md leading-6 text-gray-900"><Link :href="route('categories.edit', category.id)">Edit</Link><Link @click="deleteCategory(category.id)">Delete </Link></p>
+                            <p class="text-md leading-6 text-gray-900">
+                                <Link class="py-2 px-4 hover:text-green-600" v-if="$page.props.user.permissions.includes('update categories')" :href="route('categories.edit', category.id)">Edit</Link>
+                                <Link class="py-2 px-4 text-red-600 hover:text-red-950" v-if="$page.props.user.permissions.includes('delete categories')" @click="deleteCategory(category.id)">Delete </Link></p>
                             
                           </div>
                         </li>
                     </ul>
+                </div>
+                <div class="flex justify-between mt-2">
+                    <Link :href="categories.prev_page_url" class="rounded py-2 px-4" v-if="categories.prev_page_url">
+                        Prev
+                    </Link>
+                    <div v-else></div>
+                    <Link :href="categories.next_page_url" v-if="categories.next_page_url" class="rounded py-2 px-4">
+                        Next
+                    </Link>
+                    <div v-else></div>
                 </div>
             </div>
             </div>
