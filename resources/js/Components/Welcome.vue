@@ -5,17 +5,11 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 <template>
     <div>
         
-        <button v-if='$page.props.user.permissions.includes("create roles")'>Create Roles</button>
-        <button v-if='$page.props.user.permissions.includes("create lessons")'>Manage Lessons</button>
+        Hello World!
     </div>
 </template>
 
 <style scoped>
-    button{
-        background-color: green;
-        color: white;
-        padding: 20px;
-        margin: 5px;
-    }
+    
 
 </style>
