@@ -13,7 +13,7 @@
     })
 </script>
 <template>
-       <AppLayout>
+       <AppLayout title="Create Categorie">
             <template #header>
                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">Create category</h1>
             </template>
