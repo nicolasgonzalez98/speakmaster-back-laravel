@@ -8,16 +8,22 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
     import LessonForm from '@/Components/Lessons/Form.vue'
 
+    
+
     const form = useForm({
         name : '',
         description:"",
         image_uri:"",
         content_uri:"",
         pdf_uri:"",
-        level:""
+        level:"",
+        categories:[]
     })
 
-    
+    const handleAddCategorie = (cat) => {
+        form.categories.push(cat)
+        
+    }
 
     const props = defineProps({
         levels: {
@@ -29,6 +35,7 @@
             required: true
         }   
     })
+
 
 
 </script>
@@ -44,11 +51,13 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg ">
                         <div class="p-6 bg-white border-b border-gray-200">
-                            <LessonForm :form="form" :categories="categories" :levels="levels" @submit="form.post(route('lessons.store'))"/>
+                            <LessonForm @handleAddCategorie="handleAddCategorie" :form="form" :categories="categories" :levels="levels" @submit="form.post(route('lessons.store'))"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        
    </AppLayout>
 </template>

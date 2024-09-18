@@ -13,7 +13,9 @@
     import TextInput from '../TextInput.vue';
     import SecondaryButton from '../SecondaryButton.vue';
     import CollectionSelector from '../Common/CollectionSelector.vue';
+    import { ref } from 'vue';
 
+    const emit = defineEmits(["handleAddCategorie", "submit"])
 
     defineProps({
         form: {
@@ -34,8 +36,14 @@
             required: true
         }
     });
-
-    defineEmits(["submit"]);
+    
+    const categoriesSelected = ref([])
+    const onCategories = (_categories) => {
+        categoriesSelected.value = _categories
+        emit("handleAddCategorie", _categories)
+    }
+    
+    //defineEmits(["submit"]);
 </script>
 <template>
     <FormSection @submitted="$emit('submit')">
@@ -73,20 +81,21 @@
                 <SecondaryButton class="mt-2 mr-2" type="button">Upload PDF</SecondaryButton>
                 <InputError :message="$page.props.errors.pdf_uri" class="mt-2" />
                 <br />
-                
-                <div class="flex ">
-                    <div class="w-1/2">
-                        <!--Niveles-->
-                        <InputLabel for="level_id" value="Level"/>
-                        <select v-model="form.level" name="level_id">
-                            <option v-for="l in levels" :value="l.id" :key="l.id">{{ l.name }}</option>
-                        </select>
-                        <InputError :message="$page.props.errors.level_id" class="mt-2" />
-                    </div>
-                    <div class="w-1/2">
-                    <!--Categorias-->
-                        <InputLabel for="categories" value="Categories"/>
-                        <CollectionSelector name="categories" id="categories" :collection="categories" />
+                <div class="w-full mt-4">
+                    <div class="flex ">
+                        <div class="w-1/2 mr-1">
+                            <!--Niveles-->
+                            <InputLabel for="level_id" value="Level"/>
+                            <select class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="form.level" name="level_id">
+                                <option v-for="l in levels" :value="l.id" :key="l.id">{{ l.name }}</option>
+                            </select>
+                            <InputError :message="$page.props.errors.level_id" class="mt-2" />
+                        </div>
+                        <div class="w-1/2 ml-1">
+                        <!--Categorias-->
+                            <InputLabel for="categories" value="Categories"/>
+                            <CollectionSelector name="categories" id="categories" :collection="categories" @onCategories="onCategories"/>
+                        </div>
                     </div>
                 </div>
                 
