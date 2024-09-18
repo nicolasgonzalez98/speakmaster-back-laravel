@@ -13,7 +13,8 @@
         description:"",
         image_uri:"",
         content_uri:"",
-        pdf_uri:""
+        pdf_uri:"",
+        level:""
     })
 
     
